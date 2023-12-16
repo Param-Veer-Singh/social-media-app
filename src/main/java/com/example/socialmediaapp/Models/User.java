@@ -50,4 +50,7 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+//    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Message> messages;
 }
