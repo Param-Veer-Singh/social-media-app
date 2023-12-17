@@ -24,6 +24,7 @@ public class FollowService {
 
         if(currentUser == null)throw new Exception("Invalid user" );
         else if(followUser == null)throw new Exception("User not found");
+        else if(followUser.getPrivacyType().equals("Private")) throw new Exception("User id is locked");
 
         Follow follow = Follow.builder().currentUser(currentUser).followingUser(followUser)
                 .build();

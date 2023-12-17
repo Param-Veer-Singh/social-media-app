@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/follow")
@@ -16,6 +14,7 @@ public class FollowController {
     @Autowired
     private FollowService followService;
 
+    @PostMapping("/followUser")
     public ResponseEntity followUser(@RequestParam Integer currentUser, @RequestParam String followUserName){
         try{
             return followService.followUser(currentUser,followUserName);
@@ -24,6 +23,8 @@ public class FollowController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/unfollowUser")
     public ResponseEntity unfollowUser(@RequestParam Integer currentUserId, @RequestParam String followUserName){
         try{
             return followService.unfollowUser(currentUserId,followUserName);

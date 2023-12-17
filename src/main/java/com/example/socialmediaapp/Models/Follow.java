@@ -17,8 +17,12 @@ public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
+    @ManyToOne
+    @JoinColumn
     private User currentUser;
 
+    @ManyToOne
+    @JoinColumn
     private User followingUser;
 }
