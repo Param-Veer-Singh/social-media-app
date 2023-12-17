@@ -35,13 +35,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Privacy privacyType;
 
-//    @JsonIgnore
-//    private List<User> followers;
-//    @JsonIgnore
-//    private List<User> followings;
-//    @JsonIgnore
-//    private List<User> friends;
-
     @JsonIgnore
     @OneToMany(mappedBy = "postOwner" ,cascade = CascadeType.ALL)
     private List<Post> userPosts;
