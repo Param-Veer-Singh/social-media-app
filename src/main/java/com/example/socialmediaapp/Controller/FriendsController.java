@@ -4,6 +4,7 @@ import com.example.socialmediaapp.Service.FriendsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ public class FriendsController {
     private FriendsService friendsService;
 
     @PostMapping("/sendFriendRequest")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity sendFriendRequest(@RequestParam Integer currentUserId, @RequestParam String friendUserName){
         try{
             return friendsService.sendFriendRequest(currentUserId,friendUserName);

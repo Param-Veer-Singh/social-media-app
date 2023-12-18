@@ -6,6 +6,7 @@ import com.example.socialmediaapp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/addComment")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity addComment(@RequestBody String comment, @RequestParam Integer postId){
         try{
             return commentService.addComment(comment,postId);
@@ -27,6 +29,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/removeComment")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity removeComment(@RequestParam Integer id, @RequestParam String email, @RequestParam Integer postId){
         try{
             return commentService.deleteComment(id,email,postId);

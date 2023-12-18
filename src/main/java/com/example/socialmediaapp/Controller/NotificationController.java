@@ -5,6 +5,7 @@ import com.example.socialmediaapp.Service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @PostMapping("/addNotification")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity addNotification(@RequestBody String notification, @RequestParam Integer userId){
         try{
             return notificationService.addNotification(notification,userId);
@@ -27,6 +29,7 @@ public class NotificationController {
     }
 
     @GetMapping("/getNotifications")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Notification> getNotification(@RequestParam Integer id) throws Exception {
             return notificationService.getNotification(id);
     }

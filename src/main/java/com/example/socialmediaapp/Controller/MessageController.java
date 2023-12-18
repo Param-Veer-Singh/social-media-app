@@ -5,6 +5,7 @@ import com.example.socialmediaapp.Service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping("/send")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity sendMessage(@RequestBody Message message, @RequestParam Integer userId){
         try{
             return messageService.sendMessage(message,userId);
@@ -27,6 +29,7 @@ public class MessageController {
     }
 
     @GetMapping("/get")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Message> getMessage(@RequestParam Integer userId) throws Exception {
         return messageService.getMessages(userId);
     }

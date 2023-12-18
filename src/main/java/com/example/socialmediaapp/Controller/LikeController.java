@@ -5,6 +5,7 @@ import com.example.socialmediaapp.Service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class LikeController {
     private LikeService likeService;
 
     @PostMapping("/addLike")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity addLike(@RequestBody Like like){
         try{
             return likeService.addLike(like);
@@ -25,6 +27,7 @@ public class LikeController {
     }
 
     @DeleteMapping("/removeLike")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity removeLike(@RequestParam Integer id){
         try{
             return likeService.removeLike(id);
@@ -35,6 +38,7 @@ public class LikeController {
     }
 
     @GetMapping("/countLike")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity countLike(@RequestParam Integer postId){
         try{
             return likeService.countLike(postId);

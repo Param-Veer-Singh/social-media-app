@@ -19,6 +19,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signUp")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity signUpUser(@RequestBody AddUserDto user){
         try{
             return userService.signUpUser(user);
@@ -29,6 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/signIn")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity signInUser(@RequestBody SignInUserDto signInUserDto){
         try{
             return userService.signInUser(signInUserDto);

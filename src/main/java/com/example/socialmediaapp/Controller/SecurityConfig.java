@@ -18,17 +18,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-        UserDetails admin = User.withUsername("admin").password(passwordEncoder.encode("pass1")).roles("ADMIN").build();
-        UserDetails user = User.withUsername("user").password(passwordEncoder.encode("pass2")).roles("USER").build();
+    public UserDetailsService userDetailsService(){
+        UserDetails admin = User.withDefaultPasswordEncoder().username("admin").password("pass1").roles("ADMIN").build();
+        UserDetails user = User.withDefaultPasswordEncoder().username("user").password("pass2").roles("USER").build();
 
-        return new InMemoryUserDetailsManager(admin,user);
+        return new InMemoryUserDetailsManager(user);
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
         return httpSecurity.csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/**","/post","/swagger-ui").permitAll()
+                .authorizeHttpRequests().requestMatchers("/","/swagger-ui/**").permitAll()
                 .and().authorizeHttpRequests().requestMatchers("/user/**","/post/**").authenticated()
                 .and().formLogin().and().build();
     }
